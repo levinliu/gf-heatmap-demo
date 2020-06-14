@@ -1,5 +1,7 @@
 package org.levintech.heatmapdemo.controller;
 
+import org.levintech.heatmapdemo.model.HeatMapLabeledPoint;
+import org.levintech.heatmapdemo.model.HeatMapPoint;
 import org.levintech.heatmapdemo.util.BaiduMapUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +17,34 @@ import java.util.List;
  */
 @RestController
 public class HeatGPSLocations {
+
+    @GetMapping("/labelledGpsWithHeats")
+    public List<HeatMapLabeledPoint> getLabelledHeatMapPoints() {
+        return createLabelledHeatMapPoint();
+    }
+
+    private List<HeatMapLabeledPoint> createLabelledHeatMapPoint() {
+        List<HeatMapLabeledPoint> hps = new LinkedList<>();
+        hps.add(new HeatMapLabeledPoint("GZ", 113.23, 23.16, 185));
+        hps.add(new HeatMapLabeledPoint("SZ", 114.07, 22.62, 115));
+        hps.add(new HeatMapLabeledPoint("HZ", 120.03, 21.58, 85));
+        return hps;
+    }
+
+
+    @GetMapping("/gpsWithHeats")
+    public List<HeatMapPoint> getHeatMapPoints() {
+        return createHeatMapPoint();
+    }
+
+    private List<HeatMapPoint> createHeatMapPoint() {
+        List<HeatMapPoint> hps = new LinkedList<>();
+        hps.add(new HeatMapPoint(113.23, 23.16, 185));
+        hps.add(new HeatMapPoint(114.07, 22.62, 115));
+        hps.add(new HeatMapPoint(120.03, 21.58, 85));
+        return hps;
+    }
+
     @GetMapping("/gps")
     public List<BaiduMapUtil.GPS> getGPSList() {
         return createMockGpsList();
