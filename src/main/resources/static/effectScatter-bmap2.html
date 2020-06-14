@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+   <head>
+       <meta charset="utf-8">
+   </head>
+   <body style="height: 100%; margin: 0">
+       <div id="container" style="height:800px;width:800px;"></div>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-gl/dist/echarts-gl.min.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-stat/dist/ecStat.min.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/dataTool.min.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/china.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/world.js"></script>
+       <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=xfhhaTThl11qYVrqLZii6w8qE5ggnhrY&__ec_v__=20190126"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/bmap.min.js"></script>
+       <script type="text/javascript">
+var dom = document.getElementById("container");
+var myChart = echarts.init(dom);
+var app = {};
+option = null;
+var myData = function(){
+    var res = [];
+    res.push({
+        name: "其他",
+        value: [118.03,25.58,30]
+    });
+    res.push({
+        name: "广州B",
+        value: [120.03,21.58,25]
+    });
+    res.push({
+        name: "惠州",
+        value: [120.03,21.58,85]
+    });
+    res.push({
+        name: "汕头",
+        value: [110.03,22.58,50]
+    });
+    res.push({
+        name: "广州A",
+        value: [113.23,23.16,185]
+    });
+    res.push({
+        name: "深圳",
+        value: [114.07,22.62,115]
+    });
+    res.push({
+        name: "武汉",
+        value: [114.31,30.52,115]
+    });
+    return res;
+}
+
+option = {
+    title: {
+        text: '全国主要城市空气质量 - 百度地图2',
+        subtext: 'data from PM25.in',
+        sublink: 'http://www.pm25.in',
+        left: 'center'
+    },
+    tooltip : {
+        trigger: 'item'
+    },
+    bmap: {
+        center: [113.114129, 23.550339],
+        zoom: 5,
+        roam: true,
+        mapStyle: {
+            styleJson: [{
+                'featureType': 'water',
+                'elementType': 'all',
+                'stylers': {
+                    'color': '#d1d1d1'
+                }
+            }, {
+                'featureType': 'land',
+                'elementType': 'all',
+                'stylers': {
+                    'color': '#f3f3f3'
+                }
+            }, {
+                'featureType': 'railway',
+                'elementType': 'all',
+                'stylers': {
+                    'visibility': 'off'
+                }
+            }, {
+                'featureType': 'highway',
+                'elementType': 'all',
+                'stylers': {
+                    'color': '#fdfdfd'
+                }
+            }, {
+                'featureType': 'highway',
+                'elementType': 'labels',
+                'stylers': {
+                    'visibility': 'off'
+                }
+            }, {
+                'featureType': 'arterial',
+                'elementType': 'geometry',
+                'stylers': {
+                    'color': '#fefefe'
+                }
+            }, {
+                'featureType': 'arterial',
+                'elementType': 'geometry.fill',
+                'stylers': {
+                    'color': '#fefefe'
+                }
+            }, {
+                'featureType': 'poi',
+                'elementType': 'all',
+                'stylers': {
+                    'visibility': 'off'
+                }
+            }, {
+                'featureType': 'green',
+                'elementType': 'all',
+                'stylers': {
+                    'visibility': 'off'
+                }
+            }, {
+                'featureType': 'subway',
+                'elementType': 'all',
+                'stylers': {
+                    'visibility': 'off'
+                }
+            }, {
+                'featureType': 'manmade',
+                'elementType': 'all',
+                'stylers': {
+                    'color': '#d1d1d1'
+                }
+            }, {
+                'featureType': 'local',
+                'elementType': 'all',
+                'stylers': {
+                    'color': '#d1d1d1'
+                }
+            }, {
+                'featureType': 'arterial',
+                'elementType': 'labels',
+                'stylers': {
+                    'visibility': 'off'
+                }
+            }, {
+                'featureType': 'boundary',
+                'elementType': 'all',
+                'stylers': {
+                    'color': '#fefefe'
+                }
+            }, {
+                'featureType': 'building',
+                'elementType': 'all',
+                'stylers': {
+                    'color': '#d1d1d1'
+                }
+            }, {
+                'featureType': 'label',
+                'elementType': 'labels.text.fill',
+                'stylers': {
+                    'color': '#999999'
+                }
+            }]
+        }
+    },
+    series : [
+        {
+            name: 'pm2.5',
+            type: 'scatter',
+            coordinateSystem: 'bmap',
+            data: myData(),
+            symbolSize: function (val) {
+                return val[2] / 10;
+            },
+            encode: {
+                value: 2
+            },
+            label: {
+                formatter: '{b}',
+                position: 'right',
+                show: false
+            },
+            itemStyle: {
+                color: 'purple'
+            },
+            emphasis: {
+                label: {
+                    show: true
+                }
+            }
+        },
+        {
+            name: 'Top 2',
+            type: 'effectScatter',
+            coordinateSystem: 'bmap',
+            data: myData().sort(function (a, b) {
+                return b.value[2] - a.value[2];
+            }).slice(0, 2),
+            symbolSize: function (val) {
+                return val[2] / 10;
+            },
+            encode: {
+                value: 2
+            },
+            showEffectOn: 'render',
+            rippleEffect: {
+                brushType: 'stroke'
+            },
+            hoverAnimation: true,
+            label: {
+                formatter: '{b}',
+                position: 'right',
+                show: true
+            },
+            itemStyle: {
+                color: 'purple',
+                shadowBlur: 10,
+                shadowColor: '#333'
+            },
+            zlevel: 1
+        }
+    ]
+};;
+if (option && typeof option === "object") {
+    myChart.setOption(option, true);
+}
+       </script>
+   </body>
+</html>

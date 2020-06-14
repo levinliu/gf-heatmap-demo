@@ -1,0 +1,64 @@
+#main{
+    text-overflow :ellipsis;
+    top: 10px;
+    margin: auto;
+    width: 1050px;height:520px;
+}
+#divButton{
+    border: 1px solid #168dd9;
+    color: #FFF; box-shadow: 0 1px 0 #53bcff inset, 0 1px 2px rgba(0,0,0,0.2);  
+    background: -webkit-linear-gradient(top, #27abff 0%,#059eff 100%);
+    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    cursor: pointer;
+    text-shadow: 0 -1px 0 #1584de;
+
+}
+
+/*position:absolute;left:21%;top:21%;
+width:58%;
+height:58%;*/
+
+#tipbox{     z-index:10000;
+             display:none;
+             border-color: #000;
+             border-radius: 3px;
+             border-width: 5px;
+             -webkit-border-radius: 5px;
+             -moz-border-radius: 5px;
+             font-size: 10px; 
+
+             overflow:hidden;
+             position:absolute;
+             left:29%;top:21%;
+             width:40%;
+             height:42%;
+             background: #333 ; opacity: 0.5!important;
+             filter:alpha(opacity=60);opacity:1;}
+#tipbox img{
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    top: 2%;
+    left: 94%;
+}
+#tipbox h{
+    position: absolute;
+    left: 43%;
+    top: 4%;
+    font-size: 20px;
+    color:  #FFF;
+}
+#tipbox  a{
+    position:  absolute;
+    top: 20%;
+    left: 10%;
+    right: 10%;
+    
+    padding:5px;
+    color: #FFF;
+    font-size: 15px;
+
+}
